@@ -8,7 +8,12 @@ import org.image.viewer.core.Logic;
 import org.image.viewer.core.NamedImage;
 import java.util.concurrent.ExecutionException;
 import org.image.viewer.util.MyLogger;
-import org.image.viewer.util.Util.Direction;
+
+
+enum Direction {
+  FORWARD, BACKWARD
+}
+
 
 public class MainGui implements Runnable {
 
