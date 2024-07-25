@@ -1,4 +1,4 @@
-package imageviewer;
+package org.image.viewer.core;
 
 import java.nio.file.Path;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -44,7 +44,7 @@ public class Logic {
       first.get();    
     }
     catch(InterruptedException | ExecutionException e){
-      util.MyLogger.severe(e);
+      org.image.viewer.util.MyLogger.severe(e);
       throw new Error(e);
     }
     currentKey = cache.firstKey();

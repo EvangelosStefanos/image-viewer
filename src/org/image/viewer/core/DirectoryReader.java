@@ -1,4 +1,4 @@
-package imageviewer;
+package org.image.viewer.core;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -59,21 +59,21 @@ public class DirectoryReader {
       long pathCount = stream.filter(this::isImage).count();
       if(pathCount == 0){
         String msg = "Empty directories are not supported.";
-        util.MyLogger.info(msg);
+        org.image.viewer.util.MyLogger.info(msg);
         throw new Error(msg);
       }
       long pageCount = Math.ceilDiv(pathCount, LIMIT);
-      util.MyLogger.info(String.format("%d valid paths / %d pages / up to %d paths per page.", pathCount, pageCount, LIMIT));
+      org.image.viewer.util.MyLogger.info(String.format("%d valid paths / %d pages / up to %d paths per page.", pathCount, pageCount, LIMIT));
       return pageCount;
     }
     catch(IOException e){
-      util.MyLogger.severe(e);
+      org.image.viewer.util.MyLogger.severe(e);
       throw new Error(e);
     }
   }
   
   private ArrayList<Path> loadPage(long pageId) {
-    util.MyLogger.info("Loading page: " + pageId);
+    org.image.viewer.util.MyLogger.info("Loading page: " + pageId);
     try(Stream<Path> stream = Files.list(targetDirectoryPath)){
       return stream
         .filter(this::isImage)
@@ -82,7 +82,7 @@ public class DirectoryReader {
         .collect(Collectors.toCollection(ArrayList::new));
     }
     catch(IOException e){
-      util.MyLogger.severe(e);
+      org.image.viewer.util.MyLogger.severe(e);
       throw new Error(e);
     }
   }

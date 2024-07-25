@@ -1,14 +1,14 @@
-package gui;
+package org.image.viewer.gui;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.nio.file.Path;
 import javax.swing.*;
-import imageviewer.Logic;
-import imageviewer.NamedImage;
+import org.image.viewer.core.Logic;
+import org.image.viewer.core.NamedImage;
 import java.util.concurrent.ExecutionException;
-import util.MyLogger;
-import util.Util.Direction;
+import org.image.viewer.util.MyLogger;
+import org.image.viewer.util.Util.Direction;
 
 public class MainGui implements Runnable {
 

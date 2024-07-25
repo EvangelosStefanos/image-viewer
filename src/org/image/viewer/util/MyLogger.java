@@ -1,4 +1,4 @@
-package util;
+package org.image.viewer.util;
 
 import java.io.IOException;
 import java.util.logging.*;

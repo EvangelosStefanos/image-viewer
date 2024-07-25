@@ -1,12 +1,12 @@
-package imageviewer;
+package org.image.viewer;
 
-import gui.MainGui;
+import org.image.viewer.gui.MainGui;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import javax.swing.SwingUtilities;
-import util.MyLogger;
+import org.image.viewer.util.MyLogger;
 
 public class ImageViewer {
 

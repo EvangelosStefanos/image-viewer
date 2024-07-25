@@ -1,4 +1,4 @@
-package util;
+package org.image.viewer.util;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;

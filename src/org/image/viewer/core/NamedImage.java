@@ -1,4 +1,4 @@
-package imageviewer;
+package org.image.viewer.core;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;

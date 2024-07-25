@@ -1,10 +1,10 @@
-package gui;
+package org.image.viewer.gui;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import util.Centerer;
-import util.DownScaler;
+import org.image.viewer.util.Centerer;
+import org.image.viewer.util.DownScaler;
 
 /**
  * A {@code JPanel} that paints a {@code BufferedImage}. The image is downscaled

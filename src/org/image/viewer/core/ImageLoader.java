@@ -1,11 +1,11 @@
-package imageviewer;
+package org.image.viewer.core;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.ConcurrentNavigableMap;
 import javax.imageio.ImageIO;
-import util.DownScaler;
+import org.image.viewer.util.DownScaler;
 
 /**
  * Acquires paths from a {@code DirectoryReader}, reads the images they
@@ -43,7 +43,7 @@ public class ImageLoader implements Runnable {
     try{
       while(true){
         if(!reader.hasNext()){
-          util.MyLogger.info("Reader rightmost edge reached.");
+          org.image.viewer.util.MyLogger.info("Reader rightmost edge reached.");
           return;
         }
         Path source = reader.popNext();
@@ -51,15 +51,15 @@ public class ImageLoader implements Runnable {
         // image = scaler.resizeImage(image);
         NamedImage namedImage = new NamedImage(source, image);
         if (namedImage.getImage() != null) {
-          util.MyLogger.info("Loaded NamedImage: " + namedImage);
+          org.image.viewer.util.MyLogger.info("Loaded NamedImage: " + namedImage);
           cache.put(source, namedImage);
           return;
         }
-        util.MyLogger.info("Image could not be loaded. Dropping path: "+source);
+        org.image.viewer.util.MyLogger.info("Image could not be loaded. Dropping path: "+source);
       }
     }
     catch(IOException e){
-      util.MyLogger.severe(e);
+      org.image.viewer.util.MyLogger.severe(e);
       throw new Error(e);
     }
   }

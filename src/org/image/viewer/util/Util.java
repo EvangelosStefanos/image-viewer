@@ -1,4 +1,4 @@
-package util;
+package org.image.viewer.util;
 
 public class Util {
 
