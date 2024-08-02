@@ -1,5 +1,6 @@
 package org.image.viewer.core;
 
+import org.image.viewer.tasks.*;
 import org.image.viewer.advancers.*;
 import java.nio.file.Path;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -24,7 +25,8 @@ public class Logic {
   private final AtomicInteger nBack;  
   
   private final ExecutorService executor;
-  private final ImageLoader imageLoader;
+  private final ReadNextImageTask readNextImageTask;
+  private final ReadPrevImageTask readPrevImageTask;
   
   private Advancer advancer;
 
@@ -33,15 +35,16 @@ public class Logic {
     cache = new ConcurrentSkipListMap<>();
     
     executor = Executors.newFixedThreadPool(NTHREADS);
-    imageLoader = new ImageLoader(reader, cache);
+    readNextImageTask = new ReadNextImageTask(reader, cache);
+    readPrevImageTask = new ReadPrevImageTask(reader, cache);
 
     nBack = new AtomicInteger();
     nFront = new AtomicInteger();
     
-    Future<?> first = executor.submit(imageLoader);
+    Future<?> first = executor.submit(readNextImageTask);
     for(int i=0; i<NIMGS-1; i++){
       nFront.incrementAndGet();
-      executor.submit(imageLoader);
+      executor.submit(readNextImageTask);
     }
     try{
       first.get();    
@@ -83,7 +86,7 @@ public class Logic {
     nBack.incrementAndGet();
     nFront.decrementAndGet();
     if (nFront.get() < LIMIT && reader.hasNext()) {
-      executor.submit(imageLoader);
+      executor.submit(readNextImageTask);
       nFront.incrementAndGet();
     }
     if(nBack.get() == LIMIT){
@@ -111,13 +114,10 @@ public class Logic {
     }
     nBack.decrementAndGet();
     nFront.incrementAndGet();
-    /*
     if (nBack.get() < LIMIT && reader.hasPrev()) {
-      cache.put(cache.firstKey()-1, executor.submit());
-      currentPos.incrementAndGet();
+      executor.submit(readPrevImageTask);
       nBack.incrementAndGet();
     }
-    */
     if(nFront.get() == LIMIT){
       Path key = cache.pollLastEntry().getKey();
       reader.putNext(key);

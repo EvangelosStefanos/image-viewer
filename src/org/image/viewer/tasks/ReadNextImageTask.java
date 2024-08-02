@@ -1,10 +1,12 @@
-package org.image.viewer.core;
+package org.image.viewer.tasks;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.ConcurrentNavigableMap;
 import javax.imageio.ImageIO;
+import org.image.viewer.core.DirectoryReader;
+import org.image.viewer.core.NamedImage;
 import org.image.viewer.util.DownScaler;
 
 /**
@@ -13,7 +15,7 @@ import org.image.viewer.util.DownScaler;
  * paths used as keys.
  * @author EvanStefan
  */
-public class ImageLoader implements Runnable {
+public class ReadNextImageTask implements Runnable {
   
   private final DirectoryReader reader;
   private final ConcurrentNavigableMap<Path, NamedImage> cache;
@@ -23,7 +25,7 @@ public class ImageLoader implements Runnable {
    * @param directoryReader the specified ordered set that paths will be acquired from
    * @param cache
    */
-  public ImageLoader(DirectoryReader directoryReader, ConcurrentNavigableMap<Path, NamedImage> cache){
+  public ReadNextImageTask(DirectoryReader directoryReader, ConcurrentNavigableMap<Path, NamedImage> cache){
     this.reader = directoryReader;
     this.cache = cache;
     this.scaler = new DownScaler();
