@@ -7,12 +7,8 @@ import javax.swing.*;
 import org.image.viewer.core.Logic;
 import org.image.viewer.core.NamedImage;
 import java.util.concurrent.ExecutionException;
+import org.image.viewer.advancers.*;
 import org.image.viewer.util.MyLogger;
-
-
-enum Direction {
-  FORWARD, BACKWARD
-}
 
 
 public class MainGui implements Runnable {
@@ -48,17 +44,18 @@ public class MainGui implements Runnable {
     frame.setVisible(true);
 
     timer = new Timer(timerDelay, (ActionEvent e) -> {
-      tryExecute(Direction.FORWARD);
+      tryExecute(new ForwardAdvancer(logic));
     });
     // t.start();
   }
   
-  private boolean tryExecute(Direction direction){
+  private boolean tryExecute(Advancer advancer){
     if(!canExecute){
       return false;
     }
     canExecute = false;
-    new MyWorker(direction).execute();
+    logic.setAdvancer(advancer);
+    new MyWorker().execute();
     return true;
   }
 
@@ -68,29 +65,19 @@ public class MainGui implements Runnable {
       switch (e.getKeyCode()) {
         case KeyEvent.VK_UP -> timer.start();
         case KeyEvent.VK_DOWN -> timer.stop();
-        case KeyEvent.VK_LEFT -> tryExecute(Direction.BACKWARD);
-        case KeyEvent.VK_RIGHT -> tryExecute(Direction.FORWARD);
+        case KeyEvent.VK_LEFT -> tryExecute(new BackwardAdvancer(logic));
+        case KeyEvent.VK_RIGHT -> tryExecute(new ForwardAdvancer(logic));
         default -> { }
       }
     }
   }
 
   private class MyWorker extends SwingWorker<NamedImage, Void> {
-    private final Direction direction;
-    public MyWorker(Direction direction) {
-      this.direction = direction;
-    }
+    public MyWorker() { }
 
     @Override
     public NamedImage doInBackground() {
-      if (direction == Direction.FORWARD) {
-        return logic.forward();
-      }
-      if (direction == Direction.BACKWARD) {
-        return logic.backward();
-      }
-      // should never happen
-      return null;
+      return logic.advance();
     }
 
     @Override

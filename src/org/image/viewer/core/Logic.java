@@ -1,5 +1,6 @@
 package org.image.viewer.core;
 
+import org.image.viewer.advancers.*;
 import java.nio.file.Path;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ExecutionException;
@@ -24,6 +25,8 @@ public class Logic {
   
   private final ExecutorService executor;
   private final ImageLoader imageLoader;
+  
+  private Advancer advancer;
 
   public Logic(Path inputPath) throws InterruptedException {
     reader = new DirectoryReader(inputPath);
@@ -48,12 +51,21 @@ public class Logic {
       throw new Error(e);
     }
     currentKey = cache.firstKey();
+    advancer = new ForwardAdvancer(this);
+  }
+  
+  public void setAdvancer(Advancer advancer){
+    this.advancer = advancer;
+  }
+  
+  public synchronized NamedImage advance(){
+    return advancer.advance();
   }
   
   public NamedImage getCurrentNamedImage() {
     return cache.get(currentKey);
   }
-
+  
   public synchronized NamedImage forward() {
     if (cache.isEmpty()) { // no images found. cannot advance
       return null;
@@ -113,6 +125,5 @@ public class Logic {
     }
     return prevImage;
   }
-
 }
 
