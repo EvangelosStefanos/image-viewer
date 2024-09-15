@@ -13,6 +13,9 @@ import org.image.viewer.util.DownScaler;
  * Acquires paths from a {@code DirectoryReader}, reads the images they
  * represent to memory and stores them in a {@code ConcurrentMap}, with their
  * paths used as keys.
+ * 
+ * <p> Paths are acquired in descending order.
+ * 
  * @author EvanStefan
  */
 public class ReadPrevImageTask implements Runnable {
