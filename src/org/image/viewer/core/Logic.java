@@ -30,7 +30,7 @@ public class Logic {
   
   private Advancer advancer;
 
-  public Logic(Path inputPath) throws InterruptedException {
+  public Logic(Path inputPath) {
     reader = new DirectoryReader(inputPath);
     cache = new ConcurrentSkipListMap<>();
     

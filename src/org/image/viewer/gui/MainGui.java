@@ -22,7 +22,7 @@ public class MainGui implements Runnable {
   private final Logic logic;
   private boolean canExecute;
 
-  public MainGui(Path inputPath) throws Exception {
+  public MainGui(Path inputPath) {
     logic = new Logic(inputPath);
     canExecute = true;
   }
@@ -39,7 +39,7 @@ public class MainGui implements Runnable {
 
     frame.setSize(frameWidth, frameHeight);
     frame.setTitle(logic.getCurrentNamedImage().getName());
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
 

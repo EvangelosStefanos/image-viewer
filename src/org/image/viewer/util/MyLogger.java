@@ -5,7 +5,7 @@ import java.util.logging.*;
 
 public class MyLogger {
 
-  private static final String PATH = "logs\\log.txt";
+  private static final String PATH = "image-viewer.log";
   private static final Logger LOGGER = Logger.getLogger(MyLogger.class.getName());
 
   private MyLogger() { }
